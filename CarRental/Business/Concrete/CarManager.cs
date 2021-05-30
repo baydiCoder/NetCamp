@@ -19,7 +19,17 @@ namespace Business.Concrete
 
     public void Add(Car car)
     {
-      _iCarDal.Add(car);
+      bool isPriceOk = car.DailyPrice > 0;
+      bool isNameOk = car.Description.Length > 2;
+
+      if (isPriceOk && isNameOk)
+      {
+        _iCarDal.Add(car);
+        Console.WriteLine("araç eklendi");
+        return;
+      }
+      Console.WriteLine(!isNameOk?"geçerli açıklama giriniz:":(!isPriceOk?"Geçerli fiyat bilgisi giriniz.":""));
+     
     }
 
     public void Delete(Car car)
@@ -32,10 +42,20 @@ namespace Business.Concrete
       return _iCarDal.GetAll();
     }
 
-    public Car GetById(int carId)
+    public List<Car> GetCarsByBrandId(int brandId)
     {
-      return _iCarDal.GetById(carId);
+      return _iCarDal.GetCarsByBrandId(brandId);
     }
+
+    public List<Car> GetCarsByColorsId(int colorId)
+    {
+      return _iCarDal.GetCarsByColorsId(colorId);
+    }
+
+    //public Car GetById(int carId)
+    //{
+    //  return _iCarDal.GetById(carId);
+    //}
 
     public void Update(Car car)
     {
